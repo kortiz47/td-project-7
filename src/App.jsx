@@ -1,13 +1,18 @@
 import apiKey from "./config.js"
 import './index.css'
 
+//Component Imports
+import PhotoList from "./components/PhotoList.jsx";
+
 function App() {
 
   return (
     <>
-      <h1>Hello World</h1>
-      <p>{apiKey}</p>
+      <PhotoList />
+      <h1>{apiKey}</h1>
     </>
+    
+    
   );
     
 }
