@@ -1,4 +1,4 @@
-import React from "react";
+//import React from "react";
 import Search from "./Search";
 import Nav from "./Nav";
 import Photo from "./Photo";
