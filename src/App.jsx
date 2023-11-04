@@ -1,9 +1,12 @@
+//Styling
+import "./index.css"
+
 //Dependency Imports
 import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom"
 import apiKey from "./config.js"
 import axios from "axios";
-import { Routes, Route } from 'react-router-dom'
-import './index.css'
+
 
 //Component Imports
 import PhotoList from "./components/PhotoList.jsx";
@@ -28,10 +31,10 @@ function App() {
       <Search />
       <Nav />
       <Routes>
-        <Route path='/' element={<PhotoList />}/>
-        <Route path='/cats' element={<PhotoList />} />
-        <Route path='/dogs' element={<PhotoList />} />
-        <Route path='/computers' element={<PhotoList />} />
+        <Route path='/' element={<PhotoList photos={data} title="Rainbow Pics"/>}/>
+        <Route path='/cats' element={<PhotoList photos={data} title="Cat Pics"/>} />
+        <Route path='/dogs' element={<PhotoList photos={data} title="Dog Pics" />} />
+        <Route path='/computers' element={<PhotoList photos={data} title="Computer Pics" />} />
         <Route path='/search/:query' element={<PhotoList />} />
       </Routes>
     </div>

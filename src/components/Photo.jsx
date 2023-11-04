@@ -1,7 +1,8 @@
+import PropTypes from "prop-types"
 
-const Photo = () => {
+const Photo = ({photo}) => {
+    console.log(photo)
     return (
-
         <ul>
             <li>
                 <img src="https://farm5.staticflickr.com/4334/37032996241_4c16a9b530.jpg" alt="" />
@@ -25,4 +26,10 @@ const Photo = () => {
     )
 }
 
+
+// Photo.propTypes = {
+//     id: PropTypes.string.isRequired,
+//     server: PropTypes.string.isRequired,
+//     secret: PropTypes.string.isRequired
+// }
 export default Photo;
