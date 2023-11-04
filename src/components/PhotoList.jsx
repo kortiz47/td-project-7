@@ -6,7 +6,11 @@ const PhotoList = ({photos, title}) => {
     return (
         <div className="photo-contianer">
             <h2>{title}</h2>
-            <Photo photo={photos}/>
+            <ul>
+                {photos.map(photo =>{
+                    <Photo key={photo.id} photo={photo} />
+                })}
+            </ul>
         </div>
     );
 }
