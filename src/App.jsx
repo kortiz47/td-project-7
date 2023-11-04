@@ -21,6 +21,8 @@ function App() {
   useEffect(()=>fetchData(query), [query]);
 
   const fetchData = (query) =>{
+    setQuery(query);
+
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
     .then(response => setData(response.data.photos.photo))
     .catch(error => console.log(error));
@@ -28,7 +30,7 @@ function App() {
   
   return (
     <div className='container'>
-      <Search />
+      <Search fetchData={fetchData}/>
       <Nav />
       <Routes>
         <Route path='/' element={<PhotoList photos={data} title="Rainbow Pics"/>}/>

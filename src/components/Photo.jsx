@@ -5,6 +5,7 @@ const Photo = ({ photoData }) => {
     const secret = photoData.secret;
     const id = photoData.id;
     const alt = photoData.title;
+
     return (
         <li>
             <img src={`https://live.staticflickr.com/${server}/${id}_${secret}.jpg`} alt={`${alt}`} />
@@ -14,7 +15,7 @@ const Photo = ({ photoData }) => {
 
 
 Photo.propTypes = {
-    photoData: PropTypes.array.isRequired
+    photoData: PropTypes.object
 }
 
 export default Photo;
