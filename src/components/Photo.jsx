@@ -5,14 +5,12 @@ const Photo = ({ photoData }) => {
     const secret = photoData.secret;
     const id = photoData.id;
     const alt = photoData.title;
-
     return (
         <li>
             <img src={`https://live.staticflickr.com/${server}/${id}_${secret}.jpg`} alt={`${alt}`} />
         </li>
     );
 }
-
 
 Photo.propTypes = {
     photoData: PropTypes.object
