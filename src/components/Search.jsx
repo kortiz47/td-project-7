@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
+import PropTypes from "prop-types"
 
 const Search = ({ changeQuery }) =>{
     const navigate = useNavigate();
@@ -24,4 +25,7 @@ const Search = ({ changeQuery }) =>{
     );
 }
 
+Search.propTypes = {
+    changeQuery: PropTypes.func
+}
 export default Search;

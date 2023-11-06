@@ -22,7 +22,7 @@ function App() {
   
   useEffect(()=>{
     if(pathname === '/'){
-      fetchData()
+      fetchData('rain')
     }else if(pathname === '/cats'){
       fetchData('cat')
     }else if(pathname === '/dogs'){
@@ -35,7 +35,7 @@ function App() {
   }, [pathname, query])
 
 
-  const fetchData = (query = 'rain') => {
+  const fetchData = (query) => {
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
       .then(response => setData(response.data.photos.photo))
       .catch(error => console.log(error));
