@@ -1,7 +1,10 @@
 import Photo from "./Photo.jsx";
 import PropTypes from "prop-types"
+import { useParams } from "react-router-dom";
 
 const PhotoList = ({ photos, title }) => {
+    const { query } = useParams();
+    console.log(query)
     if (photos.length>0) {
         return (
             <div className="photo-container">
