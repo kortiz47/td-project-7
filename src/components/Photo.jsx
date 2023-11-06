@@ -5,11 +5,21 @@ const Photo = ({ photoData }) => {
     const secret = photoData.secret;
     const id = photoData.id;
     const alt = photoData.title;
-    return (
-        <li>
-            <img src={`https://live.staticflickr.com/${server}/${id}_${secret}.jpg`} alt={`${alt}`} />
-        </li>
-    );
+
+    if (!photoData) {
+        return (
+            <li className="not-found">
+                <h3>No Results Found</h3>
+                <p>You search did not return any results. Please try again.</p>
+            </li>
+        )
+    } else {
+        return (
+            <li>
+                <img src={`https://live.staticflickr.com/${server}/${id}_${secret}.jpg`} alt={`${alt}`} />
+            </li>
+        );
+    }
 }
 
 Photo.propTypes = {

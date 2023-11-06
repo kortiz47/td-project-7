@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 const PhotoList = ({ photos, title }) => {
     const { query } = useParams();
     console.log(query)
-    if (photos.length>0) {
         return (
             <div className="photo-container">
                 <h2>{title}</h2>
@@ -14,18 +13,8 @@ const PhotoList = ({ photos, title }) => {
                 </ul>
             </div>
         );
-    } else {
-        return (
-            <div className="photo-container">
-                <li className="not-found">
-                    <h3>No Results Found</h3>
-                    <p>You search did not return any results. Please try again.</p>
-                </li>
-            </div>
-        );
     }
 
-}
 
 PhotoList.propTypes = {
     photos: PropTypes.arrayOf(PropTypes.object),

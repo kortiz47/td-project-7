@@ -3,7 +3,7 @@ import "./index.css"
 
 //Dependency Imports
 import { useState, useEffect } from "react";
-import { Routes, Route, useLocation, useParams } from "react-router-dom"
+import { Routes, Route, useLocation } from "react-router-dom"
 import apiKey from "./config.js"
 import axios from "axios";
 
@@ -12,6 +12,7 @@ import axios from "axios";
 import PhotoList from "./components/PhotoList.jsx";
 import Search from './components/Search.jsx';
 import Nav from './components/Nav.jsx';
+import NotFound from "./components/NotFound.jsx";
 
 //App Component
 function App() {
@@ -28,10 +29,11 @@ function App() {
       fetchData('dog')
     }else if(pathname === '/birds'){
       fetchData('bird')
+    }else{
+      fetchData(query)
     }
-  }, [pathname])
+  }, [pathname, query])
 
-  useEffect(()=>fetchData(query), [query])
 
   const fetchData = (query = 'rain') => {
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
@@ -42,6 +44,7 @@ function App() {
   const handleChangeQuery = (query) =>{
     setQuery(query);
   }
+
   return (
     <div className='container'>
       <Search changeQuery={handleChangeQuery}/>
@@ -51,7 +54,8 @@ function App() {
         <Route path='cats'  element={<PhotoList photos={data} title="Cat Pics" />} />
         <Route path='dogs'  element={<PhotoList photos={data} title="Dog Pics" />} />
         <Route path='birds'  element={<PhotoList photos={data} title="Bird Pics" />} />
-        <Route path='search/:query' element={<PhotoList photos={data} title="User Query" />} />
+        <Route path='search/:query' element={<PhotoList photos={data} title={`${query} Pics`} />} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </div>
   );
