@@ -13,25 +13,39 @@ import PhotoList from "./components/PhotoList.jsx";
 import Search from './components/Search.jsx';
 import Nav from './components/Nav.jsx';
 import NotFound from "./components/NotFound.jsx";
+import Loading from "./components/Loading.jsx";
 
 //App Component
 function App() {
   const [data, setData] = useState([]);
   const [query, setQuery] = useState();
-  const {pathname} = useLocation();
-  
-  useEffect(()=>{
-    if(pathname === '/'){
-      fetchData('rain')
-    }else if(pathname === '/cats'){
-      fetchData('cat')
-    }else if(pathname === '/dogs'){
-      fetchData('dog')
-    }else if(pathname === '/birds'){
-      fetchData('bird')
-    }else{
-      fetchData(query)
+  const [loading, setLoading] = useState(true);
+
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    setLoading(true);
+    let activeFetch = true;
+    if (activeFetch) {
+      if (pathname === '/') {
+        fetchData('rain')
+        setLoading(false)
+      } else if (pathname === '/cats') {
+        fetchData('cat')
+        setLoading(false)
+      } else if (pathname === '/dogs') {
+        fetchData('dog')
+        setLoading(false)
+      } else if (pathname === '/birds') {
+        fetchData('birds')
+        setLoading(false)
+      } else {
+        fetchData(query)
+        setLoading(false)
+      }
     }
+    return () => { activeFetch = false }
+
   }, [pathname, query])
 
 
@@ -41,22 +55,27 @@ function App() {
       .catch(error => console.log(error));
   }
 
-  const handleChangeQuery = (query) =>{
+  const handleChangeQuery = (query) => {
     setQuery(query);
   }
 
   return (
     <div className='container'>
-      <Search changeQuery={handleChangeQuery}/>
+      <Search changeQuery={handleChangeQuery} />
       <Nav />
-      <Routes>
-        <Route path='/' element={<PhotoList photos={data} title="Rain Pics" />} />
-        <Route path='cats'  element={<PhotoList photos={data} title="Cat Pics" />} />
-        <Route path='dogs'  element={<PhotoList photos={data} title="Dog Pics" />} />
-        <Route path='birds'  element={<PhotoList photos={data} title="Bird Pics" />} />
-        <Route path='search/:query' element={<PhotoList photos={data} title={`${query} Pics`} />} />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
+      {(loading)
+        ?
+        <Loading />
+        :
+        <Routes>
+          <Route path='/' element={<PhotoList photos={data} title="Rain Pics" />} />
+          <Route path='cats' element={<PhotoList photos={data} title="Cat Pics" />} />
+          <Route path='dogs' element={<PhotoList photos={data} title="Dog Pics" />} />
+          <Route path='birds' element={<PhotoList photos={data} title="Bird Pics" />} />
+          <Route path='search/:query' element={<PhotoList photos={data} title={`${query} Pics`} />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+      }
     </div>
   );
 }
