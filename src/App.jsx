@@ -16,6 +16,7 @@ import NotFound from "./components/NotFound.jsx";
 
 //App Component
 function App() {
+  const BASE_PATH = 'https://www.flickr.com/services/rest/?method=flickr.photos.search&';
   const [data, setData] = useState([]);
   const [query, setQuery] = useState('rain');
   
@@ -24,7 +25,7 @@ function App() {
   useEffect(() => {
     
     const fetchData = (query) => {
-      axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
+      axios.get(`${BASE_PATH}api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
         .then(response => setData(response.data.photos.photo))
         .catch(error => console.log(`Could not access the Flickr API: ${error}`));
     }
@@ -44,16 +45,6 @@ function App() {
 
   }, [pathname, query])
 
-  
-  // const fetchData = (query) => {
-  //   axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
-  //     .then(response => {
-  //       setData(response.data.photos.photo); 
-  //       // setQuery(response.data.photos.photo)
-  //     })
-  //     .catch(error => console.log(`Could not access the Flickr API: ${error}`));
-  // }
-
   const handleChangeQuery = (query) => {
     setQuery(query);
   }
@@ -67,7 +58,7 @@ function App() {
         <Route path='cats' element={<PhotoList photos={data} title="Cat Pictures" />} />
         <Route path='dogs' element={<PhotoList photos={data} title="Dog Pictures" />} />
         <Route path='computers' element={<PhotoList photos={data} title="Computer Pictures" />} />
-        <Route path='/search/:query' element={<PhotoList photos={data} title={`${query} Pictures`} />} />
+        <Route path='/search/:query' element={<PhotoList photos={data} />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </div>

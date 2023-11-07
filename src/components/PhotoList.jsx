@@ -1,10 +1,12 @@
 import { useParams } from "react-router-dom";
 import Photo from "./Photo.jsx";
 import PropTypes from "prop-types"
+import { useState } from "react";
 
 //set loading state in the photolist component
 
 const PhotoList = ({ photos, title }) => {
+    //const [loading, setLoading] = useState(true);
     const { query } = useParams();
     if (photos.length === 0 && query) {
         return (
