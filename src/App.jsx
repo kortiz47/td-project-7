@@ -19,11 +19,12 @@ function App() {
   const BASE_PATH = 'https://www.flickr.com/services/rest/?method=flickr.photos.search&';
   const [data, setData] = useState([]);
   const [query, setQuery] = useState('rain');
+  const [isLoading, setIsLoading] = useState(true);
   
   const { pathname } = useLocation();
 
   useEffect(() => {
-    
+    setIsLoading(true);
     const fetchData = (query) => {
       axios.get(`${BASE_PATH}api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
         .then(response => setData(response.data.photos.photo))
@@ -32,15 +33,20 @@ function App() {
 
       if (pathname === '/') {
         fetchData('rain')
+        setIsLoading(false);
       } else if (pathname === '/cats') {
         fetchData('cat')
+        setIsLoading(false);
       } else if (pathname === '/dogs') {
         fetchData('dog')
+        setIsLoading(false);
       } else if (pathname === '/computers') {
         fetchData('computers')
+        setIsLoading(false);
       } else if(pathname.startsWith('/search/')){
         const newQuery = pathname.split('/').pop();
         fetchData(newQuery)
+        setIsLoading(false);
       }
 
   }, [pathname, query])
@@ -54,11 +60,11 @@ function App() {
       <Search changeQuery={handleChangeQuery} />
       <Nav />
       <Routes>
-        <Route path="/" element={<PhotoList photos={data} title="Rain Pictures" />} />
-        <Route path='cats' element={<PhotoList photos={data} title="Cat Pictures" />} />
-        <Route path='dogs' element={<PhotoList photos={data} title="Dog Pictures" />} />
-        <Route path='computers' element={<PhotoList photos={data} title="Computer Pictures" />} />
-        <Route path='/search/:query' element={<PhotoList photos={data} />} />
+        <Route path="/" element={<PhotoList photos={data} title="Rain Pictures" isLoading={isLoading} />} />
+        <Route path='cats' element={<PhotoList photos={data} title="Cat Pictures" isLoading={isLoading} />} />
+        <Route path='dogs' element={<PhotoList photos={data} title="Dog Pictures" isLoading={isLoading} />} />
+        <Route path='computers' element={<PhotoList photos={data} title="Computer Pictures" isLoading={isLoading} />} />
+        <Route path='/search/:query' element={<PhotoList photos={data} isLoading={isLoading}/>} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </div>
