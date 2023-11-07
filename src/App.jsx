@@ -13,6 +13,7 @@ import PhotoList from "./components/PhotoList.jsx";
 import Search from './components/Search.jsx';
 import Nav from './components/Nav.jsx';
 import NotFound from "./components/NotFound.jsx";
+import Loading from "./components/Loading.jsx";
 
 //App Component
 function App() {
@@ -25,28 +26,25 @@ function App() {
 
   useEffect(() => {
     setIsLoading(true);
+
     const fetchData = (query) => {
       axios.get(`${BASE_PATH}api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
         .then(response => setData(response.data.photos.photo))
+        .then(()=>setIsLoading(false))
         .catch(error => console.log(`Could not access the Flickr API: ${error}`));
     }
 
       if (pathname === '/') {
         fetchData('rain')
-        setIsLoading(false);
       } else if (pathname === '/cats') {
         fetchData('cat')
-        setIsLoading(false);
       } else if (pathname === '/dogs') {
         fetchData('dog')
-        setIsLoading(false);
       } else if (pathname === '/computers') {
         fetchData('computers')
-        setIsLoading(false);
       } else if(pathname.startsWith('/search/')){
         const newQuery = pathname.split('/').pop();
         fetchData(newQuery)
-        setIsLoading(false);
       }
 
   }, [pathname, query])
@@ -59,6 +57,7 @@ function App() {
     <div className='container'>
       <Search changeQuery={handleChangeQuery} />
       <Nav />
+      {(isLoading) ? (<Loading />) : (
       <Routes>
         <Route path="/" element={<PhotoList photos={data} title="Rain Pictures" isLoading={isLoading} />} />
         <Route path='cats' element={<PhotoList photos={data} title="Cat Pictures" isLoading={isLoading} />} />
@@ -67,6 +66,7 @@ function App() {
         <Route path='/search/:query' element={<PhotoList photos={data} isLoading={isLoading}/>} />
         <Route path='*' element={<NotFound />} />
       </Routes>
+      )}
     </div>
   );
 }
