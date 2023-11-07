@@ -17,13 +17,18 @@ import NotFound from "./components/NotFound.jsx";
 //App Component
 function App() {
   const [data, setData] = useState([]);
-  const [query, setQuery] = useState();
-
+  const [query, setQuery] = useState('rain');
+  
   const { pathname } = useLocation();
 
   useEffect(() => {
-    let activeFetch = true;
-    if (activeFetch) {
+    
+    const fetchData = (query) => {
+      axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
+        .then(response => setData(response.data.photos.photo))
+        .catch(error => console.log(`Could not access the Flickr API: ${error}`));
+    }
+
       if (pathname === '/') {
         fetchData('rain')
       } else if (pathname === '/cats') {
@@ -32,24 +37,22 @@ function App() {
         fetchData('dog')
       } else if (pathname === '/computers') {
         fetchData('computers')
-      } else if(pathname === `/search/${query}`){
-        console.log(query)
-        fetchData(query)
+      } else if(pathname.startsWith('/search/')){
+        const newQuery = pathname.split('/').pop();
+        fetchData(newQuery)
       }
-    }
-    return () => { activeFetch = false }
 
   }, [pathname, query])
 
   
-  const fetchData = (query) => {
-    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
-      .then(response => {
-        setData(response.data.photos.photo); 
-        // setQuery(response.data.photos.photo)
-      })
-      .catch(error => console.log(`Could not access the Flickr API: ${error}`));
-  }
+  // const fetchData = (query) => {
+  //   axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
+  //     .then(response => {
+  //       setData(response.data.photos.photo); 
+  //       // setQuery(response.data.photos.photo)
+  //     })
+  //     .catch(error => console.log(`Could not access the Flickr API: ${error}`));
+  // }
 
   const handleChangeQuery = (query) => {
     setQuery(query);
