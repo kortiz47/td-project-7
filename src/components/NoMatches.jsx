@@ -1,5 +1,5 @@
 
-const NoResults = () =>{
+const NoMatches = () =>{
     return (
         <div className="photo-container">
             <li className="not-found">
@@ -10,4 +10,4 @@ const NoResults = () =>{
     );
 }
 
-export default NoResults;
+export default NoMatches;

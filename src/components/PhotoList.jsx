@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import NoResults from "./NoResults.jsx";
+import NoMatches from "./NoMatches.jsx";
 import Photo from "./Photo.jsx";
 import PropTypes from "prop-types"
 import Loading from "./Loading.jsx";
@@ -9,10 +9,8 @@ const PhotoList = ({ photos, title, isLoading }) => {
     if (isLoading) {
         return (<Loading />)
     } else {
-
-
         if (photos.length === 0 && query) {
-            return (<NoResults />);
+            return ( <NoMatches />);
         } else if (!query) {
             return (
                 <div className="photo-container">
