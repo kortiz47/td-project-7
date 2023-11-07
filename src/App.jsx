@@ -13,7 +13,6 @@ import PhotoList from "./components/PhotoList.jsx";
 import Search from './components/Search.jsx';
 import Nav from './components/Nav.jsx';
 import NotFound from "./components/NotFound.jsx";
-import Loading from "./components/Loading.jsx";
 
 //App Component
 function App() {
@@ -57,7 +56,6 @@ function App() {
     <div className='container'>
       <Search changeQuery={handleChangeQuery} />
       <Nav />
-      {(isLoading) ? (<Loading />) : (
       <Routes>
         <Route path="/" element={<PhotoList photos={data} title="Rain Pictures" isLoading={isLoading} />} />
         <Route path='cats' element={<PhotoList photos={data} title="Cat Pictures" isLoading={isLoading} />} />
@@ -66,7 +64,6 @@ function App() {
         <Route path='/search/:query' element={<PhotoList photos={data} isLoading={isLoading}/>} />
         <Route path='*' element={<NotFound />} />
       </Routes>
-      )}
     </div>
   );
 }
