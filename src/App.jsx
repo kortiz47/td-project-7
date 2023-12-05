@@ -17,8 +17,12 @@ import NotFound from "./components/NotFound.jsx";
 //App Component
 function App() {
   const BASE_PATH = 'https://www.flickr.com/services/rest/?method=flickr.photos.search&';
+
+  //set state for the data that is being fetched 
   const [data, setData] = useState([]);
+  //set state for search query 
   const [query, setQuery] = useState('rain');
+  //set state for whether data is loading
   const [isLoading, setIsLoading] = useState(true);
   
   const { pathname } = useLocation();
