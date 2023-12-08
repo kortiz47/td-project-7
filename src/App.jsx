@@ -27,6 +27,7 @@ function App() {
   
   const { pathname } = useLocation();
 
+  
   useEffect(() => {
     setIsLoading(true);
 
@@ -36,15 +37,15 @@ function App() {
         .then(()=>setIsLoading(false))
         .catch(error => console.log(`Could not access the Flickr API: ${error}`));
     }
-
+    
       if (pathname === '/') {
         fetchData('rain')
       } else if (pathname === '/cats') {
         fetchData('cat')
       } else if (pathname === '/dogs') {
         fetchData('dog')
-      } else if (pathname === '/computers') {
-        fetchData('computers')
+      } else if (pathname === '/trees') {
+        fetchData('trees')
       } else if(pathname.startsWith('/search/')){
         const newQuery = pathname.split('/').pop();
         fetchData(newQuery)
@@ -53,6 +54,7 @@ function App() {
   }, [pathname, query])
 
   const handleChangeQuery = (query) => {
+    
     setQuery(query);
   }
 
@@ -64,7 +66,7 @@ function App() {
         <Route path="/" element={<PhotoList photos={data} title="Rain Pictures" isLoading={isLoading} />} />
         <Route path='cats' element={<PhotoList photos={data} title="Cat Pictures" isLoading={isLoading} />} />
         <Route path='dogs' element={<PhotoList photos={data} title="Dog Pictures" isLoading={isLoading} />} />
-        <Route path='computers' element={<PhotoList photos={data} title="Computer Pictures" isLoading={isLoading} />} />
+        <Route path='trees' element={<PhotoList photos={data} title="Tree Pictures" isLoading={isLoading} />} />
         <Route path='/search/:query' element={<PhotoList photos={data} isLoading={isLoading}/>} />
         <Route path='*' element={<NotFound />} />
       </Routes>

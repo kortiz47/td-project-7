@@ -6,6 +6,7 @@ import Loading from "./Loading.jsx";
 
 const PhotoList = ({ photos, title, isLoading }) => {
     const { query } = useParams();
+    
     if (isLoading) {
         return (<Loading />)
     } else {
